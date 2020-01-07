@@ -20,8 +20,8 @@
         var troop = new PIXI.Sprite(troopTex);
 
         // center the sprite's anchor point
-        troop.anchor.x = 0;  
-        troop.anchor.y = 0;
+        troop.anchor.x = 0.5;  
+        troop.anchor.y = 0.5;
 
         // move the sprite to the center of the screen
         troop.position.x = 400;  
@@ -41,8 +41,8 @@
 //y: troop.position.y+Math.sin(troop.rotation)
         stage.on("mousedown", function(e){  
         shoot(troop.rotation, {
-            x: troop.position.x,
-            y: troop.position.y
+            x: troop.position.x*0.5,
+            y: troop.position.y*0.5
         });
         })
 
