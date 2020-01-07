@@ -37,10 +37,12 @@
 
         stage.interactive = true;
 
+//     x: troop.position.x+Math.cos(troop.rotation),
+//y: troop.position.y+Math.sin(troop.rotation)
         stage.on("mousedown", function(e){  
         shoot(troop.rotation, {
-            x: troop.position.x+Math.cos(troop.rotation),
-            y: troop.position.y*0.5+Math.sin(troop.rotation)
+            x: troop.position.x,
+            y: troop.position.y
         });
         })
 
