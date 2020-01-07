@@ -1,0 +1,84 @@
+<html>
+    <head>
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.2.0/pixi.js"></script>
+    </head>
+    <body>
+        
+    </body>
+    <script>
+        var renderer = PIXI.autoDetectRenderer(800, 600,{backgroundColor : 0x1099bb});  
+        document.body.appendChild(renderer.view);
+
+        // create the root of the scene graph
+        var stage = new PIXI.Container();
+
+        // create a texture from an image path
+        var troopTex = PIXI.Texture.fromImage('assets/trooper.png');  
+        var bulletTex = PIXI.Texture.fromImage('assets/bullet.png');
+
+        // create a new Sprite using the texture
+        var troop = new PIXI.Sprite(troopTex);
+
+        // center the sprite's anchor point
+        troop.anchor.x = 0.5;  
+        troop.anchor.y = 0.5;
+
+        // move the sprite to the center of the screen
+        troop.position.x = 200;  
+        troop.position.y = 150;
+
+        var background = new PIXI.Graphics();  
+        background.beginFill(0x123456);  
+        background.drawRect(0,0,800,600);  
+        background.endFill();  
+        stage.addChild(background);
+
+        stage.addChild(troop);
+
+        stage.interactive = true;
+
+        stage.on("mousedown", function(e){  
+        shoot(troop.rotation, {
+            x: troop.position.x+Math.cos(troop.rotation)*20,
+            y: troop.position.y+Math.sin(troop.rotation)*20
+        });
+        })
+
+        var bullets = [];  
+        var bulletSpeed = 5;
+
+        function shoot(rotation, startPosition){  
+        var bullet = new PIXI.Sprite(bulletTex);
+        bullet.position.x = startPosition.x;
+        bullet.position.y = startPosition.y;
+        bullet.rotation = rotation;
+        stage.addChild(bullet);
+        bullets.push(bullet);
+        }
+
+        function rotateToPoint(mx, my, px, py){  
+        var self = this;
+        var dist_Y = my - py;
+        var dist_X = mx - px;
+        var angle = Math.atan2(dist_Y,dist_X);
+        //var degrees = angle * 180/ Math.PI;
+        return angle;
+        }
+
+        // start animating
+        animate();  
+        function animate() {  
+        requestAnimationFrame(animate);
+
+        // rotate
+        troop.rotation = rotateToPoint(renderer.plugins.interaction.mouse.global.x, renderer.plugins.interaction.mouse.global.y, troop.position.x, troop.position.y);
+
+        for(var b=bullets.length-1;b>=0;b--){
+            bullets[b].position.x += Math.cos(bullets[b].rotation)*bulletSpeed;
+            bullets[b].position.y += Math.sin(bullets[b].rotation)*bulletSpeed;
+        }
+        // render the container
+        renderer.render(stage);
+        }
+    </script>
+</html>
