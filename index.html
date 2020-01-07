@@ -39,8 +39,8 @@
 
         stage.on("mousedown", function(e){  
         shoot(troop.rotation, {
-            x: troop.anchor.x+Math.cos(troop.rotation)*20,
-            y: troop.anchor.y+Math.sin(troop.rotation)*20
+            x: troop.position.x+Math.cos(troop.rotation),
+            y: troop.position.y+Math.sin(troop.rotation)
         });
         })
 
