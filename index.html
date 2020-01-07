@@ -39,10 +39,13 @@
 
         stage.on("mousedown", function(e){  
         shoot(troop.rotation, {
-            x: troop.position.x+Math.cos(troop.rotation)*20,
-            y: troop.position.y+Math.sin(troop.rotation)*20
+            x: troop.anchor.x+Math.cos(troop.rotation)*20,
+            y: troop.anchor.y+Math.sin(troop.rotation)*20
         });
         })
+        stage.on("mousedown", function(e){ 
+
+        )}
 
         var bullets = [];  
         var bulletSpeed = 5;
